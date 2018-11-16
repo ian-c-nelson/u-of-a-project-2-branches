@@ -50,8 +50,8 @@ module.exports = function (app) {
 
   // Update a branch
   app.put("/api/branches", function (req, res) {
-    db.Example.update(req.body, { 
-      where: { id: req.body.id } 
+    db.Example.update(req.body, {
+      where: { id: req.body.id }
     }).then(function (dbExample) {
       res.json(dbExample);
     });
@@ -112,13 +112,13 @@ module.exports = function (app) {
 
   // Update a new branch
   app.put("/api/branches", function (req, res) {
-    db.Example.update(req.body, { 
-      where: { id: req.body.id } 
+    db.Example.update(req.body, {
+      where: { id: req.body.id }
     }).then(function (dbExample) {
       res.json(dbExample);
     });
   });
-  
+
   // Delete a seed by id
   app.delete("/api/seeds/:id", function (req, res) {
     db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
