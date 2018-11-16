@@ -6,6 +6,12 @@ module.exports = function (sequelize, DataTypes) {
         notNull: true,
       }
     },
+    handle: {
+      type: DataTypes.STRING,
+      validate: {
+        notNull: true,
+      }
+    },
     email: {
       type: DataTypes.STRING,
       validate: {
