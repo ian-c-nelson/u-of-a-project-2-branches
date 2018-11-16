@@ -4,21 +4,21 @@ module.exports = function (app) {
   // =========== Leaves (Posts) ===================================================================
   // Get all leaves
   app.get("/api/leaves", function (req, res) {
-    db.Example.findAll({}).then(function (dbExamples) {
+    db.Leaf.findAll({}).then(function (dbExamples) {
       res.json(dbExamples);
     });
   });
 
   // Create a new leaf
   app.post("/api/leaves", function (req, res) {
-    db.Example.create(req.body).then(function (dbExample) {
+    db.Leaf.create(req.body).then(function (dbExample) {
       res.json(dbExample);
     });
   });
 
   // Update a leaf
   app.put("/api/leaves", function (req, res) {
-    db.Example.update(req.body, {
+    db.Leaf.update(req.body, {
       where: { id: req.body.id }
     }).then(function (dbExample) {
       res.json(dbExample);
@@ -27,7 +27,7 @@ module.exports = function (app) {
 
   // Delete a leaf by id
   app.delete("/api/leaves/:id", function (req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
+    db.Leaf.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
       res.json(dbExample);
     });
   });
@@ -36,21 +36,22 @@ module.exports = function (app) {
   // =========== Branches (Users) =================================================================
   // Get all branches
   app.get("/api/branches", function (req, res) {
-    db.Example.findAll({}).then(function (dbExamples) {
+    db.Branch.findAll({}).then(function (dbExamples) {
       res.json(dbExamples);
     });
   });
 
   // Create a new branch
   app.post("/api/branches", function (req, res) {
-    db.Example.create(req.body).then(function (dbExample) {
+    console.log(req.body);
+    db.Branch.create(req.body).then(function (dbExample) {
       res.json(dbExample);
     });
   });
 
   // Update a branch
   app.put("/api/branches", function (req, res) {
-    db.Example.update(req.body, {
+    db.Branch.update(req.body, {
       where: { id: req.body.id }
     }).then(function (dbExample) {
       res.json(dbExample);
@@ -59,7 +60,7 @@ module.exports = function (app) {
 
   // Delete a branch by id
   app.delete("/api/branches/:id", function (req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
+    db.Branch.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
       res.json(dbExample);
     });
   });
@@ -68,28 +69,28 @@ module.exports = function (app) {
   // =========== Saplings (Followers) =================================================================
   // Get all saplings
   app.get("/api/saplings", function (req, res) {
-    db.Example.findAll({}).then(function (dbExamples) {
+    db.Saplings.findAll({}).then(function (dbExamples) {
       res.json(dbExamples);
     });
   });
 
   // Create a new sapling
   app.post("/api/saplings", function (req, res) {
-    db.Example.create(req.body).then(function (dbExample) {
+    db.Saplings.create(req.body).then(function (dbExample) {
       res.json(dbExample);
     });
   });
 
   // Update a sapling
   app.put("/api/saplings", function (req, res) {
-    db.Example.update(req.body, { where: { id: req.body.id } }).then(function (dbExample) {
+    db.Saplings.update(req.body, { where: { id: req.body.id } }).then(function (dbExample) {
       res.json(dbExample);
     });
   });
 
   // Delete a sapling by id
   app.delete("/api/saplings/:id", function (req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
+    db.Saplings.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
       res.json(dbExample);
     });
   });
@@ -98,21 +99,21 @@ module.exports = function (app) {
   // =========== Seeds (Hashtags) =================================================================
   // Get all seeds
   app.get("/api/seeds", function (req, res) {
-    db.Example.findAll({}).then(function (dbExamples) {
+    db.Seed.findAll({}).then(function (dbExamples) {
       res.json(dbExamples);
     });
   });
 
   // Create a new seed
   app.post("/api/seeds", function (req, res) {
-    db.Example.create(req.body).then(function (dbExample) {
+    db.Seed.create(req.body).then(function (dbExample) {
       res.json(dbExample);
     });
   });
 
   // Update a new branch
   app.put("/api/branches", function (req, res) {
-    db.Example.update(req.body, {
+    db.Seed.update(req.body, {
       where: { id: req.body.id }
     }).then(function (dbExample) {
       res.json(dbExample);
@@ -121,7 +122,7 @@ module.exports = function (app) {
 
   // Delete a seed by id
   app.delete("/api/seeds/:id", function (req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
+    db.Seed.destroy({ where: { id: req.params.id } }).then(function (dbExample) {
       res.json(dbExample);
     });
   });
