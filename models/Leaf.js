@@ -20,16 +20,19 @@ module.exports = function(sequelize, DataTypes) {
     Leaf.associate = (models) => {
         Leaf.belongsTo(models.Branch);
 
+        // replies
         Leaf.belongsToMany(models.Leaf, {
             as: "replies",
             through: "LeafReplies"
         });
 
+        // retweets
         Leaf.belongsToMany(models.Branch, {
             as: "grafts",
             through: "BranchGrafts"
         });
 
+        // hashtags
         Leaf.associate = (models) => {
             Leaf.belongsToMany(models.Seed, {
                 as: "seeds",
