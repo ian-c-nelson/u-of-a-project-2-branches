@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const exphbs = require("express-handlebars");
+const path = require("path");
 
 const db = require("./models");
 
@@ -10,7 +11,9 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static("public"));
+
+// static folder
+app.use("/static", express.static(path.join(__dirname, "./public")));
 
 // Handlebars
 app.engine(
