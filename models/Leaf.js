@@ -2,8 +2,8 @@ module.exports = function(sequelize, DataTypes) {
     var Leaf = sequelize.define("Leaf", {
       text: {
           type: DataTypes.STRING(140),
+          allowNull: false,
           validate: {
-            notNull: true,
             len: [1, 140]
           }
       },
@@ -18,7 +18,6 @@ module.exports = function(sequelize, DataTypes) {
     });
 
     Leaf.associate = (models) => {
-        Leaf.belongsTo(models.Branch);
 
         // replies
         Leaf.belongsToMany(models.Leaf, {
@@ -32,13 +31,6 @@ module.exports = function(sequelize, DataTypes) {
             through: "BranchGrafts"
         });
 
-        // hashtags
-        Leaf.associate = (models) => {
-            Leaf.belongsToMany(models.Seed, {
-                as: "seeds",
-                through: "LeafSeeds"
-            });
-        }
     }
 
     return Leaf;

@@ -2,20 +2,16 @@ module.exports = function (sequelize, DataTypes) {
   var Branch = sequelize.define("Branch", {
     name: {
       type: DataTypes.STRING,
-      validate: {
-        notNull: true,
-      }
+      allowNull: false
     },
     handle: {
       type: DataTypes.STRING,
-      validate: {
-        notNull: true,
-      }
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        notNull: true,
         isEmail: true
       }
     },
@@ -35,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
 
   Branch.associate = (models) => {
     Branch.hasMany(models.Leaf, {
-      as: "leaf",
+      
       onDelete: "cascade"
     });
 
