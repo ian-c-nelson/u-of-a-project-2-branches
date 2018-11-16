@@ -1,11 +1,11 @@
 require("dotenv").config();
-var express = require("express");
-var exphbs = require("express-handlebars");
+const express = require("express");
+const exphbs = require("express-handlebars");
 
-var db = require("./models");
+const db = require("./models");
 
-var app = express();
-var PORT = process.env.PORT || 3000;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -25,7 +25,11 @@ app.set("view engine", "handlebars");
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
-var syncOptions = { force: false };
+let resetDb = process.argv[3] === "reset-db";
+let syncOptions = { force: resetDb };
+if(resetDb) {
+  console.log("Rebuilding Database. Data will be lost.");
+}
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
