@@ -31,14 +31,17 @@ module.exports = function (sequelize, DataTypes) {
 
   Branch.associate = (models) => {
     Branch.hasMany(models.Leaf, {
-      
-      onDelete: "cascade"
+      as: "leaves",
+      onDelete: "cascade",
+      foreignKey: {
+        allowNull: false
+      }
     });
 
     Branch.belongsToMany(models.Branch, {
       as: "saplings",
       through: "Saplings"
-    })
+    });
   };
 
   return Branch;
