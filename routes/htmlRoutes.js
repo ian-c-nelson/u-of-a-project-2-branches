@@ -17,7 +17,6 @@ module.exports = function (app) {
       data.branchData = branchData;
 
       db.Leaf.findAll({
-        include: [db.Branch]
       }).then(function (leafData) {
         data.leafData = leafData;
 
