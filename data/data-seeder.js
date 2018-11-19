@@ -1,4 +1,4 @@
-require("../modules/utils");
+require("../public/js/utils");
 const _ = require("lodash-core");
 const os = require("os");
 const axios = require("axios");
@@ -166,6 +166,7 @@ class DataSeeder {
 };
 
 DataSeeder.prototype.fetchData = function (options) {
+    console.log(options);
     options.method = "GET";
     axios
         .request(options)

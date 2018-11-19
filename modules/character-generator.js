@@ -1,4 +1,4 @@
-require("../modules/utils");
+require("../public/js/utils");
 const _ = require("lodash-core");
 const Character = require("./character");
 const RollTheBones = require("./roll-the-bones");
