@@ -111,8 +111,8 @@ module.exports = function (app) {
     });
   });
 
-  // Update a new branch
-  app.put("/api/branches", function (req, res) {
+  // Update a seed
+  app.put("/api/seeds", function (req, res) {
     db.Seed.update(req.body, {
       where: { id: req.body.id }
     }).then(function (dbExample) {
