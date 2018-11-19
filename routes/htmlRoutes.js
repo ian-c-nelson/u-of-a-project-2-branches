@@ -1,8 +1,8 @@
 var db = require("../models");
 
 module.exports = function (app) {
-  // Load index page
 
+  // Load index page
   app.get("/", function (req, res) {
     // GET ALL INFO OF EVERYTHING!!!!!
     var data = {
@@ -37,13 +37,8 @@ module.exports = function (app) {
 
   });
 
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function (req, res) {
-    db.Leaf.findOne({ where: { id: req.params.id } }).then(function (dbExample) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
+  app.get("/login", function (req, res) {
+    res.render("login");
   });
 
   // Render 404 page for any unmatched routes
