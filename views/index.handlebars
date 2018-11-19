@@ -1,14 +1,36 @@
-<div class="card my-2">
-  <h5 class="card-header">Leaves</h5>
-  <div class="card-body">
-    <h1>{{data.anything }}</h1>
-    <ul class="list-group">
-        {{#each leafData}}
-          {{> leaves/leaf-card}}
-        {{/each}}
-    </ul>
+<div class="container">
+<div class="row">
+  <div class="col-md-3">
+    <div class="card">
+      <h5 class="card-header">Top Branchers</h5>
+      <div class="card-body">
+        <ul class="list-group">
+            {{#each topBranchers}}
+              <li>{{handle}}</li>
+            {{/each}}
+        </ul>
+      </div>
+  </div>
+  </div>
+
+  <div class="col-md-9">
+    <div class="card">
+      <h5 class="card-header">Leaves</h5>
+      <div class="card-body">
+        <ul class="list-group">
+            {{#each leafData}}
+              {{> leaves/leaf-card}}
+            {{/each}}
+        </ul>
+      </div>
+  </div>
+
   </div>
 </div>
+</div>
+
+
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
+<script src="/static/js/utils.js"></script>
+<script src="/static/js/index.js"></script>
