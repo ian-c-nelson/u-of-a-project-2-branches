@@ -1,10 +1,10 @@
 module.exports = function (sequelize, DataTypes) {
   var Leaf = sequelize.define("Leaf", {
     text: {
-      type: DataTypes.STRING(140),
+      type: DataTypes.STRING(280),
       allowNull: false,
       validate: {
-        len: [1, 140]
+        len: [1, 280]
       }
     },
     likes: {
@@ -24,17 +24,17 @@ module.exports = function (sequelize, DataTypes) {
       }
     });
 
-    // // replies
-    // Leaf.belongsToMany(models.Leaf, {
-    //     as: "replies",
-    //     through: "LeafReplies"
-    // });
+    // replies
+    Leaf.belongsToMany(models.Leaf, {
+        as: "replies",
+        through: "LeafReplies"
+    });
 
-    // // retweets
-    // Leaf.belongsToMany(models.Branch, {
-    //     as: "grafts",
-    //     through: "BranchGrafts"
-    // });
+    // retweets
+    Leaf.belongsToMany(models.Branch, {
+        as: "grafts",
+        through: "BranchGrafts"
+    });
 
   }
 

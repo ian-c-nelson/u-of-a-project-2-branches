@@ -60,7 +60,6 @@ module.exports = function (app) {
 
   // Create a new branch
   app.post("/api/branches", function (req, res) {
-    console.log(req.body);
     db.Branch.create(req.body).then(function (resData) {
       res.json(resData);
     });

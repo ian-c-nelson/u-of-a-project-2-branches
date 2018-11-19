@@ -1,6 +1,8 @@
+require("../modules/utils");
 const _ = require("lodash-core");
 const Character = require("./character");
 const RollTheBones = require("./roll-the-bones");
+
 
 class CharacterGenerator {
     constructor() {
@@ -523,11 +525,6 @@ CharacterGenerator.prototype.doAbilityUpgrade = function (primaryStatKeys, secon
     return stats;
 }
 
-CharacterGenerator.prototype.getRandomItem = function (array) {
-    let index = Math.floor(Math.random() * array.length);
-    return array[index];
-}
-
 CharacterGenerator.prototype.getRandomName = function (gender, race) {
     let listRace = race.name;
     let listSubRace = race.subRace;
@@ -552,9 +549,9 @@ CharacterGenerator.prototype.getRandomName = function (gender, race) {
         return list.race === listRace && (!listSubRace || !list.subRace || list.subRace === listSubRace);
     });
 
-    let randomList = this.getRandomItem(nameLists);
-    let firstName = this.getRandomItem(randomList.firstNames[gender.toLowerCase()]);
-    let lastName = randomList.surnames.length > 0 ? this.getRandomItem(randomList.surnames) : "";
+    let randomList = nameLists.getRandomItem();
+    let firstName = randomList.firstNames[gender.toLowerCase()].getRandomItem();
+    let lastName = randomList.surnames.length > 0 ? randomList.surnames.getRandomItem() : "";
 
     return (firstName + " " + lastName).trim();
 }
@@ -563,8 +560,8 @@ CharacterGenerator.prototype.generateRandomCharacter = function (level) {
     level = parseInt(level) || 1;
 
     let gender = this.rtb.flipCoin() === 1 ? "Female" : "Male";
-    let playerRace = this.getRandomItem(this.races);
-    let playerClass = this.getRandomItem(this.classes);
+    let playerRace = this.races.getRandomItem();
+    let playerClass = this.classes.getRandomItem();
     let stats = this.rollStats(playerClass, playerRace, level);
     let hp = this.rollHitPoints(playerClass, playerRace, stats, level);
     let name = this.getRandomName(gender, playerRace);
@@ -662,7 +659,7 @@ CharacterGenerator.prototype.rollStats = function (playerClass, playerRace, leve
     if (playerClass.primaryStats.indexOf("&&") !== -1) {
         primaryStats = playerClass.primaryStats.split("&&");
     } else if (playerClass.primaryStats.indexOf("||") !== -1) {
-        let stat = this.getRandomItem(playerClass.primaryStats.split("||"))
+        let stat = playerClass.primaryStats.split("||").getRandomItem()
         primaryStats.push(stat);
     } else {
         primaryStats.push(playerClass.primaryStats);
@@ -698,13 +695,13 @@ CharacterGenerator.prototype.rollStats = function (playerClass, playerRace, leve
 
     if (playerRace.name == "Half-Elf") {
         // Half elves get two +1 stats other than cha
-        let stat1 = this.getRandomItem(this.statKeys.filter(stat => {
+        let stat1 = this.statKeys.filter(stat => {
             return stat != "cha";
-        }));
+        }).getRandomItem();
 
-        let stat2 = this.getRandomItem(this.statKeys.filter(stat => {
+        let stat2 = this.statKeys.filter(stat => {
             return stat != "cha" && stat != stat1;
-        }));
+        }).getRandomItem();
 
         stats[stat1]++;
         stats[stat2]++;

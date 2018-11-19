@@ -1,7 +1,7 @@
 // add a function to String to allow replace all instances of a substring.
 String.prototype.replaceAll = function (replaceStr, replaceStrWith) {
     return this.split(replaceStr).join(replaceStrWith);
-}
+};
 
 // add a function to String to pad left
 String.prototype.padLeft = function (padChar, length) {
@@ -13,7 +13,7 @@ String.prototype.padLeft = function (padChar, length) {
     }
 
     return temp;
-}
+};
 
 // add a function to String to pad left
 String.prototype.padRight = function (padChar, length) {
@@ -25,4 +25,10 @@ String.prototype.padRight = function (padChar, length) {
     }
 
     return temp;
+};
+
+// add a function to Array to get a random item from it;
+Array.prototype.getRandomItem = function () {
+    let index = Math.floor(Math.random() * this.length);
+    return this[index];
 }
