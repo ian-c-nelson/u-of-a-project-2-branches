@@ -52,8 +52,29 @@ module.exports = function (app) {
 
   // =========== Branches (Users) =================================================================
   // Get all branches
-  app.get("/api/branches", function (req, res) {
-    db.Branch.findAll({}).then(function (resData) {
+  app.get("/api/branches/:id?", function (req, res) {
+    let options = {};
+
+    if(req.params.id) {
+      options.where = {
+        id: req.params.id
+      }
+    };
+
+    if(req.query.includeLeaves === "true") {
+      options.include = [db.Leaf]
+    }
+
+    if(req.query.idList) {
+      let idList = req.query.idList.split("|");
+      options.where = {
+        id: {
+          [db.Sequelize.Op.in]: idList
+        }
+      }
+    }
+
+    db.Branch.findAll(options).then(function (resData) {
       res.json(resData);
     });
   });
