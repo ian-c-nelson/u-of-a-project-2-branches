@@ -1,3 +1,64 @@
-.list-group-item {
-  line-height: 2.5;
+body {
+  background-image:url("../images/Wallpaper-Dark-Green-Leave-Macro.jpg");
+  background-repeat: repeat-y; 
+  background-position:top;
+  padding:10px;
+}
+
+.navbar.bg-light{
+  background-color: rgba(11, 163, 28, 0.815) !important;
+
+  font-weight: bold;
+  padding: 10px;
+  border: 10px;
+  border-bottom-color: black 10px; 
+  border-top-color: black;
+  color: white  !important;
+}
+
+.cards{
+  border: 4px solid;
+  color:black;
+}
+
+.card-img-top{
+  width: 70px;
+  height: 70px;
+  border: black solid;
+  background-color: lightgrey;
+}
+
+.navbar-brand{
+  font-style: italic;
+  font-size: 40px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  
+}
+
+.nav-item{
+  font-weight: bold;
+  color: black;
+}
+
+.btn{
+  border-top:black;
+  color: black;
+  font-style: italic; 
+}
+
+.footer {
+  height: 2rem;
+  color: white;
+  font-size: small;
+  background-color: rgba(11, 163, 28, 0.815) !important;
+}
+
+.footer .muted-text {
+  font-size: x-small;
+  margin-left: 1rem;
+}
+
+.footer a,
+.footer a:visited {
+  color: white;
 }
