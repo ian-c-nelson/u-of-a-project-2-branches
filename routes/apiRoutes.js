@@ -9,7 +9,7 @@ module.exports = function (app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the index page.
   // Otherwise the user will be sent an error
-  app.post("/api/login", passport.authenticate("local"), function(req, res) {
+  app.post("/api/login", passport.authenticate("local"), function (req, res) {
     // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
@@ -69,19 +69,22 @@ module.exports = function (app) {
 
   // Create a new leaf
   app.post("/api/leaves", function (req, res) {
+    let hashTags = HashTags(req.body.text);
+    var seeds = [];
+    hashTags.forEach(function (buritto) {
+      seeds.push({ text: buritto });
+    });
+    
+    req.body.seeds = seeds;
+
     db.Leaf
       .create(req.body)
       .then(function (resData) {
 
-        let hashTags = HashTags(req.body.text);
-        var seeds = [];
-        hashTags.forEach(function (buritto){
-          seeds.push({text: buritto});
-        })
 
-        db.Seed.bulkCreate(seeds).then(function (resData) {
-          console.log("Hashtags addes");
-        });
+        // db.Seed.bulkCreate(seeds).then(function (resData) {
+        //   console.log("Hashtags addes");
+        // });
 
         res.json(resData);
       })
@@ -130,8 +133,24 @@ module.exports = function (app) {
     };
 
     if (req.query.includeLeaves === "true") {
-      options.include = [db.Leaf]
+      // options.include = {
+      //   as: "leaves",
+      //   model: [db.Leaf],
+      //   include: [{ model: [db.Branch] }]
+      // }
+
+      options.include =
+        [
+          {
+            model: db.Leaf, as: 'leaves', include:
+              [
+                { model: db.Branch }
+              ]
+          }
+        ]
     }
+
+    console.log(db.Branch);
 
     if (req.query.idList) {
       let idList = req.query.idList.split("|");
@@ -141,6 +160,7 @@ module.exports = function (app) {
         }
       }
     }
+    console.log(options);
 
     db.Branch.findAll(options).then(function (resData) {
       res.json(resData);
@@ -243,7 +263,9 @@ module.exports = function (app) {
 
   // Create a new seed
   app.post("/api/seeds", function (req, res) {
-    db.Seed.create(req.body).then(function (resData) {
+    db.Seed.create(req.body, {
+      include: [db.Leaf]
+    }).then(function (resData) {
       res.json(resData);
     })
       .catch(function (err) {
