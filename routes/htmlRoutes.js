@@ -32,6 +32,10 @@ module.exports = function (app) {
   });
 
   app.get("/index", isAuthenticated, function (req, res) {
+    var branchIdFilter;
+    if(req.query.filterById){
+      branchIdFilter = req.query.filterById;
+    }
     var data = {};
     var connectionQuery = `SELECT BranchId, count(*) as BranchCount
                               from Leafs
@@ -46,10 +50,11 @@ module.exports = function (app) {
     limit 10;` ;
 
 
-    fetchData(apiDomain + "leaves?includeBranch=true", function (response) {
-      data.leafData = response;
+    var path = branchIdFilter ? "branches/"+ branchIdFilter + "?includeLeaves=true" :  "leaves?includeBranch=true";
+    console.log(path);
+    fetchData(apiDomain + path , function (response) {
 
-      // console.log(data.leafData);
+      data.leafData = branchIdFilter ? response[0].leaves :  response;
 
       data.topBranchers = [];
 
@@ -67,6 +72,7 @@ module.exports = function (app) {
             idList += "|";
           }
         }
+
         fetchData(apiDomain + "branches/?idList=" + idList, function (moreData) {
           data.topBranchers = moreData;
 

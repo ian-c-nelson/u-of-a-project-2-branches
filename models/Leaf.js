@@ -36,6 +36,11 @@ module.exports = function (sequelize, DataTypes) {
         through: "BranchGrafts"
     });
 
+    // Leaf.belongsToMany(models.Seed, {
+    //   as: "seeds",
+    //   through: "LeafSeeds"
+    // });
+
   }
 
   return Leaf;
