@@ -1,5 +1,6 @@
 var db = require("../models");
 var passport = require("../config/passport");
+const HashTags = require("find-hashtags");
 
 module.exports = function (app) {
 
@@ -64,6 +65,17 @@ module.exports = function (app) {
     db.Leaf
       .create(req.body)
       .then(function (resData) {
+
+        let hashTags = HashTags(req.body.text);
+        var seeds = [];
+        hashTags.forEach(function (buritto){
+          seeds.push({text: buritto});
+        })
+
+        db.Seed.bulkCreate(seeds).then(function (resData) {
+          console.log("Hashtags addes");
+        });
+
         res.json(resData);
       })
       .catch(function (err) {
@@ -73,6 +85,7 @@ module.exports = function (app) {
 
   // Update a leaf
   app.put("/api/leaves", function (req, res) {
+    console.log(req.body);
     db.Leaf.update(req.body, {
       where: { id: req.body.id }
     }).then(function (resData) {

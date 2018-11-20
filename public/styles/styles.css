@@ -1,6 +1,7 @@
 body {
   background-image:url("../images/Wallpaper-Dark-Green-Leave-Macro.jpg");
-  background-repeat: repeat-y; 
+  background-repeat:no-repeat;
+  background-attachment: fixed;
   background-position:top;
   padding:10px;
 }
