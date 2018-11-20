@@ -30,7 +30,7 @@ module.exports = function (app) {
       res.redirect(307, "/api/login");
     }).catch(function (err) {
       console.log(err);
-      res.redirect(500, err);
+      res.json(err);
     });
   });
 
@@ -61,7 +61,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
 
@@ -74,7 +74,7 @@ module.exports = function (app) {
       })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
 
@@ -87,7 +87,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
     ;
   });
@@ -99,7 +99,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
   // =========== Leaves (Posts) ===================================================================
@@ -133,7 +133,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
 
@@ -144,7 +144,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
 
@@ -164,7 +164,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
   // =========== Branches (Users) =================================================================
@@ -177,7 +177,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
 
@@ -188,7 +188,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
 
@@ -199,7 +199,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
 
@@ -210,7 +210,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
   // =========== Branches (Users) =================================================================
@@ -223,7 +223,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
 
@@ -234,7 +234,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
 
@@ -247,7 +247,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
 
@@ -258,7 +258,7 @@ module.exports = function (app) {
     })
       .catch(function (err) {
         console.log(err);
-        res.redirect(500, err);
+        res.json(err);
       });
   });
   // =========== Seeds (Hashtags) =================================================================
