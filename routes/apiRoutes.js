@@ -28,9 +28,9 @@ module.exports = function (app) {
       password: req.body.password
     }).then(function () {
       res.redirect(307, "/api/login");
-    }).catch(function ({ data }) {
-      console.log(data);
-      res.redirect(500, "/500");
+    }).catch(function (err) {
+      console.log(err);
+      res.redirect(500, err);
     });
   });
 
@@ -59,9 +59,9 @@ module.exports = function (app) {
     db.Leaf.findAll(options).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
 
@@ -72,9 +72,9 @@ module.exports = function (app) {
       .then(function (resData) {
         res.json(resData);
       })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
 
@@ -85,9 +85,9 @@ module.exports = function (app) {
     }).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
     ;
   });
@@ -97,9 +97,9 @@ module.exports = function (app) {
     db.Leaf.destroy({ where: { id: req.params.id } }).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
   // =========== Leaves (Posts) ===================================================================
@@ -131,9 +131,9 @@ module.exports = function (app) {
     db.Branch.findAll(options).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
 
@@ -142,9 +142,9 @@ module.exports = function (app) {
     db.Branch.create(req.body).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
 
@@ -162,9 +162,9 @@ module.exports = function (app) {
     db.Branch.destroy({ where: { id: req.params.id } }).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
   // =========== Branches (Users) =================================================================
@@ -175,9 +175,9 @@ module.exports = function (app) {
     db.Saplings.findAll({}).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
 
@@ -186,9 +186,9 @@ module.exports = function (app) {
     db.Saplings.create(req.body).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
 
@@ -197,9 +197,9 @@ module.exports = function (app) {
     db.Saplings.update(req.body, { where: { id: req.body.id } }).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
 
@@ -208,9 +208,9 @@ module.exports = function (app) {
     db.Saplings.destroy({ where: { id: req.params.id } }).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
   // =========== Branches (Users) =================================================================
@@ -221,9 +221,9 @@ module.exports = function (app) {
     db.Seed.findAll({}).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
 
@@ -232,9 +232,9 @@ module.exports = function (app) {
     db.Seed.create(req.body).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
 
@@ -245,9 +245,9 @@ module.exports = function (app) {
     }).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
 
@@ -256,9 +256,9 @@ module.exports = function (app) {
     db.Seed.destroy({ where: { id: req.params.id } }).then(function (resData) {
       res.json(resData);
     })
-      .catch(function ({ data }) {
-        console.log(data);
-        res.redirect(500, "/500");
+      .catch(function (err) {
+        console.log(err);
+        res.redirect(500, err);
       });
   });
   // =========== Seeds (Hashtags) =================================================================

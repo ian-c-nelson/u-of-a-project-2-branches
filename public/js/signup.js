@@ -58,6 +58,6 @@ function showErrorMessage(msg) {
 }
 
 function handleLoginErr(err) {
+  console.log(err);
   showErrorMessage(err.responseJSON);
-  $("#alert .msg").text();
 }
