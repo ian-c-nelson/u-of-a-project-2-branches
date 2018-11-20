@@ -1,7 +1,7 @@
 <div class="row">
 
-  <div class="col-sm-3">
-    <div class="card">
+  <div class="col-sm-3 my-3">
+    <div class="card topHash">
       <img class="card-img-top" src="/static/images/organic-food.png" alt="leaf">
       <div class="card-body">
         <h5 class="card-title">Card title that wraps to a new line</h5>
@@ -13,7 +13,7 @@
   </div>
 
   <div class="col-sm-6">
-    <div class="card my-2">
+    <div class="card my-3">
       <h5 class="card-header">Leaves</h5>
       <div class="card-body">
         {{#each leafData}}
@@ -23,14 +23,14 @@
     </div>
   </div>
 
-  <div class="col-sm-3">
-    <div class="card">
+  <div class="col-sm-3 my-3">
+    <div class="card topBranch">
       <img class="card-img-top" src="/static/images/sapling.png" alt="sapling">
       <div class="card-body">
-        <h5 class="card-title">Card title that wraps to a new line</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Integer posuere erat a ante</p>
+        <h5 class="card-title">Top Branch</h5>
+        {{#each topBranchers}}
+        <li><a href=""> {{handle}} </a> </li>
+        {{/each}}
       </div>
     </div>
   </div>
