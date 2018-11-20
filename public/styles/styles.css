@@ -62,3 +62,9 @@ body {
 .footer a:visited {
   color: white;
 }
+
+.leaves{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  opacity: 90%;
+}
