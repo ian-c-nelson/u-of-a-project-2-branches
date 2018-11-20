@@ -37,27 +37,46 @@ module.exports = function (app) {
                               from Leafs
                               group by Leafs.BranchId
                               order by BranchCount DESC
-                              limit 10;`
+                              limit 10;` ;
+
+    var connectionQueryHashtags = `SELECT text, count(*) as textCount
+    from Seeds
+    group by Seeds.text
+    order by textCount DESC
+    limit 10;` ;
+
 
     fetchData(apiDomain + "leaves?includeBranch=true", function (response) {
       data.leafData = response;
 
+      // console.log(data.leafData);
+
       data.topBranchers = [];
+
 
       connection.query(connectionQuery, function (err, resualt) {
         if (err) throw err;
 
+        console.log("SOME DATA HERE LOOK HERE *&@^#$@#&^$%&@^*!", resualt[0]);
+
         let idList = "";
+
         for (var i = 0; i < resualt.length; i++) {
           idList += resualt[i].BranchId;
           if (i < resualt.length - 1) {
             idList += "|";
           }
         }
-
         fetchData(apiDomain + "branches/?idList=" + idList, function (moreData) {
           data.topBranchers = moreData;
-          res.render("index", data);
+
+          connection.query(connectionQueryHashtags, function (err, hashtags) {
+            if (err) throw err;
+            data.topHashTags = hashtags;
+            console.log(hashtags);
+
+            res.render("index", data);
+          })
         })
 
       });
@@ -88,5 +107,5 @@ function fetchData(url, cb) {
         options.callback(data);
       }
     })
-    .catch(({data}) => console.log(data));
+    .catch(({ data }) => console.log(data));
 }
