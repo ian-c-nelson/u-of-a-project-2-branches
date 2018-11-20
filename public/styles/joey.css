@@ -1,4 +1,9 @@
-body#LoginForm{ background-image:url("https://www.pixelstalk.net/wp-content/uploads/images2/Wallpaper-Dark-Green-Leave-Macro.jpg"); background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;}
+body#LoginForm{
+  background-image:url("https://www.pixelstalk.net/wp-content/uploads/images2/Wallpaper-Dark-Green-Leave-Macro.jpg");
+  background-position:center;
+  background-size:cover;
+  padding:10px;
+}
 
 
 .panel h2{ color:#444444; font-size:18px; margin:0 0 8px 0;}

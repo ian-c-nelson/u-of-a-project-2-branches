@@ -1,18 +1,32 @@
+<script src="/static/js/index.js"></script>
 <div class="row">
 
   <div class="col-sm-3 my-3">
     <div class="card topHash">
       <img class="card-img-top" src="/static/images/organic-food.png" alt="leaf">
       <div class="card-body">
-        <h5 class="card-title">Card title that wraps to a new line</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Integer posuere erat a ante</p>
+        <h5 class="card-title">Trending Seeds</h5>
+        {{#each topHashTags}}
+        <li><a href=""> {{text}} </a> </li>
+        {{/each}}
       </div>
     </div>
   </div>
 
   <div class="col-sm-6">
+
+      <div class="card my-3">
+      <h5 class="card-header">Post Something</h5>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <textarea class="form-control mb-2" id="createPost" rows="3"></textarea>
+            <button for="createPost" type="button" class="btn btn-success">Make a Post</button>
+          </div>
+        </form> 
+      </div>
+    </div>
+
     <div class="card my-3">
       <h5 class="card-header">Leaves</h5>
       <div class="card-body">
@@ -27,11 +41,13 @@
     <div class="card topBranch">
       <img class="card-img-top" src="/static/images/sapling.png" alt="sapling">
       <div class="card-body">
-        <h5 class="card-title">Top Branch</h5>
+        <h5 class="card-title">Trending Branchs</h5>
         {{#each topBranchers}}
-        <li><a href=""> {{handle}} </a> </li>
+        <li><a href="" data-id="{{id}}"> {{handle}} </a> </li>
         {{/each}}
       </div>
     </div>
   </div>
 </div>
+
+
