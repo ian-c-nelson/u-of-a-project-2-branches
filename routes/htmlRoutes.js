@@ -1,17 +1,37 @@
-var db = require("../models");
-var axios = require("axios");
-const os = require("os");
-const connection = require("../config/connection");
-const HashTags = require("find-hashtags");
 require("../public/js/utils");
+const db = require("../models");
+const axios = require("axios");
+const connection = require("../config/connection");
 
+// Requiring our custom middleware for checking if a user is logged in
+const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function (app) {
   const apiDomain = "http://localhost:" + app.listenOnPort + "/api/";
 
   // Load index page
   app.get("/", function (req, res) {
+    // If the user already has an account send them to the index page
+    if (req.user) {
+      res.redirect("/index");
+    }
+    res.redirect("/login");
+  });
 
+  app.get("/login", function (req, res) {
+    // If the user already has an account send them to the index page
+    if (req.user) {
+      res.redirect("/index");
+    }
+
+    res.render("login", { layout: "anon" });
+  });
+
+  app.get("/signup", function (req, res) {
+    res.render("signup", { layout: "anon" });
+  });
+
+  app.get("/index", isAuthenticated, function (req, res) {
     var data = {};
     var connectionQuery = `SELECT BranchId, count(*) as BranchCount
                               from Leafs
@@ -50,8 +70,8 @@ module.exports = function (app) {
         fetchData(apiDomain + "branches/?idList=" + idList, function (moreData) {
           data.topBranchers = moreData;
 
-          connection.query(connectionQueryHashtags, function(err, hashtags){
-            if(err) throw err;
+          connection.query(connectionQueryHashtags, function (err, hashtags) {
+            if (err) throw err;
             data.topHashTags = hashtags;
             console.log(hashtags);
 
@@ -61,10 +81,6 @@ module.exports = function (app) {
 
       });
     });
-  });
-
-  app.get("/login", function (req, res) {
-    res.render("login");
   });
 
   // Render 404 page for any unmatched routes
@@ -82,7 +98,7 @@ function fetchData(url, cb) {
       }
     }
   }
-  console.log(options);
+
   options.method = "GET";
   axios
     .request(options)
@@ -91,5 +107,5 @@ function fetchData(url, cb) {
         options.callback(data);
       }
     })
-    .catch((response) => console.log(response));
+    .catch(({ data }) => console.log(data));
 }

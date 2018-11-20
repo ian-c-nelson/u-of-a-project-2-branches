@@ -579,8 +579,6 @@ CharacterGenerator.prototype.generateRandomCharacter = function (level) {
         }
     );
 
-    // console.log(char);
-
     return char;
 };
 

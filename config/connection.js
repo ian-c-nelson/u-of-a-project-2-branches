@@ -1,16 +1,19 @@
 // Set up MySQL connection.
-var mysql = require("mysql2");
+const mysql = require("mysql2");
+const config = require("../config/config.json");
 
-var connection;
+let connection;
+let options = config[process.env.NODE_ENV];
+
 if (process.env.JAWSDB_URL) {
   connection = mysql.createConnection(process.env.JAWSDB_URL)
 } else {
   connection = mysql.createConnection({
-    host: "localhost",
+    host: options.host,
     port: 3306,
-    user: "root",
-    password: "",
-    database: "branches_db"
+    user: options.username,
+    password: options.password,
+    database: options.database,
   });
 }
 
