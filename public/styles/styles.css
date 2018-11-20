@@ -1,19 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Acme|Merienda:400,700');
+
 body {
   background-image:url("../images/Wallpaper-Dark-Green-Leave-Macro.jpg");
   background-repeat: repeat-y; 
   background-position:top;
   padding:10px;
+  font-family: 'Acme', sans-serif;
 }
 
-.navbar.bg-light{
+.navbar {
   background-color: rgba(11, 163, 28, 0.815) !important;
+  padding: 0;
+}
 
+.navbar-brand {
+  font-family: "Merienda", cursive;
+  font-style: italic;
   font-weight: bold;
-  padding: 10px;
-  border: 10px;
-  border-bottom-color: black 10px; 
-  border-top-color: black;
-  color: white  !important;
+  font-size: 50px;
+  padding: 0;
+  padding-right: .5rem;
+}
+
+.nav-item{
+  font-weight: bold;
+  color: black;
 }
 
 .cards{
@@ -28,22 +39,10 @@ body {
   background-color: lightgrey;
 }
 
-.navbar-brand{
-  font-style: italic;
-  font-size: 40px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  
-}
 
-.nav-item{
-  font-weight: bold;
-  color: black;
-}
-
-.btn{
-  border-top:black;
-  color: black;
-  font-style: italic; 
+.btn-light{
+  background-color: #e9ecef;
+  border: solid #cad3db 1px;
 }
 
 .footer {
@@ -61,4 +60,10 @@ body {
 .footer a,
 .footer a:visited {
   color: white;
+}
+
+#signup-page .input-group-text {
+  width: 8rem;
+  text-align: right; 
+  display: block;
 }

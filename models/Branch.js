@@ -1,3 +1,7 @@
+// Requiring bcrypt for password hashing. Using the bcrypt-nodejs version as the regular bcrypt module
+// sometimes causes errors on Windows machines
+var bcrypt = require("bcrypt-nodejs");
+
 module.exports = function (sequelize, DataTypes) {
   var Branch = sequelize.define("Branch", {
     name: {
@@ -11,13 +15,18 @@ module.exports = function (sequelize, DataTypes) {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         isEmail: true
       }
     },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     profileImgUrl: {
       type: DataTypes.STRING(512),
-      field:"profile_img_url",
+      field: "profile_img_url",
       allowNull: true,
       validate: {
         isUrl: true
@@ -44,15 +53,16 @@ module.exports = function (sequelize, DataTypes) {
     });
   };
 
-    // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
-    User.prototype.validPassword = function(password) {
-      return bcrypt.compareSync(password, this.password);
-    };
-    // Hooks are automatic methods that run during various phases of the User Model lifecycle
-    // In this case, before a User is created, we will automatically hash their password
-    User.hook("beforeCreate", function(branch) {
-      user.password = bcrypt.hashSync(branch.password, bcrypt.genSaltSync(10), null);
-    });
-  
+  // Creating a custom method for our Branch model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
+  Branch.prototype.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+
+  // Hooks are automatic methods that run during various phases of the Branch Model lifecycle
+  // In this case, before a Branch is created, we will automatically hash their password
+  Branch.hook("beforeCreate", function (branch) {
+    branch.password = bcrypt.hashSync(branch.password, bcrypt.genSaltSync(10), null);
+  });
+
   return Branch;
 };

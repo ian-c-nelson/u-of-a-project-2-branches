@@ -166,7 +166,6 @@ class DataSeeder {
 };
 
 DataSeeder.prototype.fetchData = function (options) {
-    console.log(options);
     options.method = "GET";
     axios
         .request(options)
@@ -185,7 +184,8 @@ DataSeeder.prototype.generateBranch = function () {
     let branch = {
         "name": char.name,
         "handle": handle,
-        "email": email
+        "email": email,
+        "password" : "password"
     };
 
     return branch;

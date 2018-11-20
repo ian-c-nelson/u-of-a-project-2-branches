@@ -1,0 +1,78 @@
+<script src="/static/js/signup.js"></script>
+
+<div id="signup-page" class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <form class="signup">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Name</span>
+                                        </div>
+                                        <input id="first-name-input" type="text" aria-label="First Name" class="form-control" placeholder="First.">
+                                        <input id="last-name-input" type="text" aria-label="Last Name" class="form-control" placeholder="Last.">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend text-right">
+                                            <span class="input-group-text" id="handle-input-group">Handle</span>
+                                        </div>
+                                        <input id="handle-input" type="text" class="form-control" aria-describedby="handle-input-group"
+                                            placeholder="Enter handle.">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend text-right">
+                                            <span class="input-group-text" id="email-input-group">Email Address</span>
+                                        </div>
+                                        <input id="email-input" type="email" class="form-control" aria-describedby="email-input-group"
+                                            placeholder="Enter email.">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend text-right">
+                                            <span class="input-group-text" id="password-input-group">Password</span>
+                                        </div>
+                                        <input id="password-input" type="password" class="form-control"
+                                            aria-describedby="password-input-group" placeholder="Enter password.">
+                                    </div>
+
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend text-right">
+                                            <span class="input-group-text" id="confirm-password-input-group">Confirm
+                                                Password</span>
+                                        </div>
+                                        <input id="confirm-password-input" type="password" class="form-control"
+                                            aria-describedby="confirm-password-input-group" placeholder="Confirm password.">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div style="display: none" id="alert" class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span> <span class="msg"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-light mb-2">Submit</button>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <p>Or log in <a href="/login">here</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

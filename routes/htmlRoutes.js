@@ -1,18 +1,38 @@
-var db = require("../models");
-var axios = require("axios");
-const os = require("os");
-const connection = require("../config/connection");
 require("../public/js/utils");
+const db = require("../models");
+const axios = require("axios");
+const connection = require("../config/connection");
 
+// Requiring our custom middleware for checking if a user is logged in
+const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function (app) {
   const apiDomain = "http://localhost:" + app.listenOnPort + "/api/";
 
   // Load index page
   app.get("/", function (req, res) {
+    // If the user already has an account send them to the index page
+    if (req.user) {
+      res.redirect("/index");
+    }
+    res.redirect("/login");
+  });
 
+  app.get("/login", function (req, res) {
+    // If the user already has an account send them to the index page
+    if (req.user) {
+      res.redirect("/index");
+    }
+
+    res.render("login", { layout: "anon" });
+  });
+
+  app.get("/signup", function (req, res) {
+    res.render("signup", { layout: "anon" });
+  });
+
+  app.get("/index", isAuthenticated, function (req, res) {
     var data = {};
-    var topArr = []
     var connectionQuery = `SELECT BranchId, count(*) as BranchCount
                               from Leafs
                               group by Leafs.BranchId
@@ -35,6 +55,7 @@ module.exports = function (app) {
             idList += "|";
           }
         }
+
         fetchData(apiDomain + "branches/?idList=" + idList, function (moreData) {
           data.topBranchers = moreData;
           console.log(data.topBranchers);
@@ -43,34 +64,6 @@ module.exports = function (app) {
 
       });
     });
-
-    // we need to determin user id add where clause
-    // db.Branch.findOne({}).then(function (branchData) {
-    //   data.branchData = branchData;
-
-    //   db.Leaf.findAll({
-    //   }).then(function (leafData) {
-    //     data.leafData = leafData;
-
-
-    //     db.Seed.findAll().then(function (seedData) {
-    //       data.seedData = seedData;
-
-    //       db.Branch.findAll().then(function (topBranches) {
-
-    //         data.topBranches = topBranches;
-    //         console.log(data.leafData);
-    //         res.render("index", data);
-    //       })
-    //     })
-    //   })
-    // });
-
-
-  });
-
-  app.get("/login", function (req, res) {
-    res.render("login");
   });
 
   // Render 404 page for any unmatched routes
@@ -88,7 +81,7 @@ function fetchData(url, cb) {
       }
     }
   }
-  console.log(options);
+
   options.method = "GET";
   axios
     .request(options)
@@ -97,5 +90,5 @@ function fetchData(url, cb) {
         options.callback(data);
       }
     })
-    .catch((response) => console.log(response));
+    .catch(({data}) => console.log(data));
 }

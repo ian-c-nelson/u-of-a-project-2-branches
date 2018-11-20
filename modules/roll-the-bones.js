@@ -40,7 +40,6 @@ RollTheBones.prototype.doRoll = function (dieSides, numDice) {
     numDice = parseInt(numDice) || 1;
     let rolls = _.times(numDice, () => {
         let roll = Math.floor(Math.random() * dieSides) + 1;
-        // console.log("d" + dieSides + ":" + roll);
         return roll;
     });
     return numDice === 1 ? rolls[0] : rolls;
