@@ -62,8 +62,15 @@ body {
   color: white;
 }
 
+<<<<<<< HEAD
 #signup-page .input-group-text {
   width: 8rem;
   text-align: right; 
   display: block;
+=======
+.leaves{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  opacity: 90%;
+>>>>>>> 6b0012fb3124f7161dbb2fa96c423287a13eac3b
 }

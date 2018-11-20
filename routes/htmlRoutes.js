@@ -47,7 +47,6 @@ module.exports = function (app) {
       connection.query(connectionQuery, function (err, resualt) {
         if (err) throw err;
 
-        console.log("SOME DATA HERE LOOK HERE *&@^#$@#&^$%&@^*!", resualt[0]);
         let idList = "";
         for (var i = 0; i < resualt.length; i++) {
           idList += resualt[i].BranchId;
@@ -58,7 +57,6 @@ module.exports = function (app) {
 
         fetchData(apiDomain + "branches/?idList=" + idList, function (moreData) {
           data.topBranchers = moreData;
-          console.log(data.topBranchers);
           res.render("index", data);
         })
 

@@ -8,14 +8,12 @@ module.exports = function (app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the index page.
   // Otherwise the user will be sent an error
-  app.post("/login",
-    passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      successFlash: 'Welcome!',
-      failureFlash: true
-    })
-  );
+  app.post("/api/login", passport.authenticate("local"), function(req, res) {
+    // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
+    // So we're sending the user back the route to the members page because the redirect will happen on the front end
+    // They won't get this or even be able to access this page if they aren't authed
+    res.json("/index");
+  });
 
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize Branch Model. If the user is created successfully, proceed to log the user in,
@@ -45,6 +43,9 @@ module.exports = function (app) {
   // Get all leaves
   app.get("/api/leaves/:id?", function (req, res) {
     let options = {};
+
+    console.log(req.user);
+
 
     if (req.params.id) {
       options.where = {
