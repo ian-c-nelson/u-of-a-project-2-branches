@@ -22,4 +22,22 @@ $(window).ready(function(){
       });
     });
   });
+
+  $(".postButton").on("click", function(event){
+    var textLeaf = $(".postText").val();
+
+    var data = {
+      text: textLeaf
+    }
+
+    var obj = {
+      url: "/api/leaves",
+      method: "POST",
+      data: data
+    }
+    $.ajax(obj).then(function(resData){
+      location.reload();
+    });
+  });
+
 });

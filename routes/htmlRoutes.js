@@ -43,10 +43,7 @@ module.exports = function (app) {
       }
     };
 
-    var branchIdFilter;
-    if (req.query.filterById) {
-      branchIdFilter = req.query.filterById;
-    }
+    
     var connectionQuery = `SELECT BranchId, count(*) as BranchCount
                               from Leafs
                               group by Leafs.BranchId
@@ -60,10 +57,29 @@ module.exports = function (app) {
     limit 10;` ;
 
 
-    var path = branchIdFilter ? "branches/" + branchIdFilter + "?includeLeaves=true" : "leaves?includeBranch=true";
+
+    var path = "leaves?includeBranch=true";
+
+    if (req.query.filterById) {
+      path = "branches/" + req.query.filterById + "?includeLeaves=true";
+
+    }
+    if (req.query.filterByName) {
+      path = "branches/?filterByName=" + req.query.filterByName;
+
+    }
+
+    console.log(path);
+
     fetchData(apiDomain + path, function (response) {
 
-      data.leafData = branchIdFilter ? response[0].leaves : response;
+
+      if (req.query.filterById || req.query.filterByName) {
+        data.leafData = response[0].leaves;
+      }
+      else {
+        data.leafData = response;
+      }
 
       data.topBranchers = [];
 
