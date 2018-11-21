@@ -1,58 +1,82 @@
 <script src="/static/js/index.js"></script>
 <div class="row">
 
-  <div class="col-sm-3 my-3">
-    <div class="card profile">
-      <img class="card-img-top" src="/static/images/organic-food.png" alt="leaf">
-      <div class="card-body">
-        <!-- put stuff here -->
-      </div>
-    </div>
-    <div class="card topHash">
-      <div class="card-body">
-        <h5 class="card-title">Trending Seeds</h5>
-        {{#each topHashTags}}
-        <li><a href=""> {{text}} </a> </li>
-        {{/each}}
-      </div>
-    </div>
-  </div>
+    <div class="col-sm-3 my-3">
+        <div class="card profile">
+            <div class="card-body">
+                <h6>Name here</h6>
+                <p>User name here</p>
+                <div class="row">
+                    <div class="col-sm" id="leaves-input">
+                        Leaves
+                    </div>
+                    <div class="col-sm" id="saplings-input">
+                        Saplings
+                    </div>
+                    <div class="col-sm" id="stems-input">
+                        Stems
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <span id="leaves-count">3</span>
 
-  <div class="col-sm-6 mb-3">
+                    </div>
+                    <div class="col-sm">
+                        <span id="saplings-count">4</span>
 
-      <div class="card my-3">
-      <h5 class="card-header">Post Something</h5>
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <textarea class="form-control mb-2 postText" id="createPost" rows="3"></textarea>
-            <button for="createPost" type="button" class="btn btn-success postButton">Make a Post</button>
-          </div>
-        </form> 
-      </div>
+                    </div>
+                    <div class="col-sm">
+                        <span id="saplings-count">5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card topHash">
+            <img class="card-img-top" src="/static/images/organic-food.png" alt="leaf">
+            <div class="card-body">
+                <h5 class="card-title">Trending Seeds</h5>
+                {{#each topHashTags}}
+                <li><a href=""> {{text}} </a> </li>
+                {{/each}}
+            </div>
+        </div>
     </div>
 
-    <div class="card my-3">
-      <h5 class="card-header">Leaves</h5>
-      <div class="card-body">
-        {{#each leafData}}
-        {{> leaves/leaf-card}}
-        {{/each}}
-      </div>
-    </div>
-  </div>
+    <div class="col-sm-6">
 
-  <div class="col-sm-3 my-3">
-    <div class="card topBranch">
-      <img class="card-img-top" src="/static/images/sapling.png" alt="sapling">
-      <div class="card-body">
-        <h5 class="card-title">Trending Branchs</h5>
-        {{#each topBranchers}}
-        <li><a href="/index?filterById={{id}}" > {{handle}} </a> </li>
-        {{/each}}
-      </div>
+        <div class="card my-3">
+            <h5 class="card-header">Post Something</h5>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea class="form-control mb-2" id="createPost" rows="3"></textarea>
+                        <button for="createPost" type="button" class="btn btn-success">Make a Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card my-3">
+            <h5 class="card-header">Leaves</h5>
+            <div class="card-body">
+                {{#each leafData}}
+                {{> leaves/leaf-card}}
+                {{/each}}
+            </div>
+        </div>
     </div>
-  </div>
+
+    <div class="col-sm-3 my-3">
+        <div class="card topBranch">
+            <img class="card-img-top" src="/static/images/sapling.png" alt="sapling">
+            <div class="card-body">
+                <h5 class="card-title">Trending Branchs</h5>
+                {{#each topBranchers}}
+                <li><a href="/index?filterById={{id}}"> {{handle}} </a> </li>
+                {{/each}}
+            </div>
+        </div>
+    </div>
 </div>
-
-
