@@ -1,16 +1,16 @@
 {
-  "development": {
+  "development-mac": {
     "username": "root",
     "password": "",
     "database": "branches_db",
     "host": "localhost",
     "dialect": "mysql"
   },
-  "development2": {
-    "username": "nyvhnqrtiavd4zo6",
-    "password": "zzfc0qbu37pi5sj0",
-    "database": "zx1irwmdt27mkvgz",
-    "host": "pfw0ltdr46khxib3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+  "development-pc": {
+    "username": "root",
+    "password": "root",
+    "database": "branches_db",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {

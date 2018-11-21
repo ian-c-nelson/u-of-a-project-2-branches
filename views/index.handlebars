@@ -1,12 +1,18 @@
 <script src="/static/js/index.js"></script>
 <div class="row">
 
-    <div class="col-sm-3 my-3">
-        <div class="card profile">
+    <div class="col-sm-3">
+        <div class="card profile my-3">
             <div class="card-body">
-                <h6>Name here</h6>
-                <p>User name here</p>
-                <div class="row">
+                <div class="user-name">
+                    <a href="/profile">
+                        {{user.name}}
+                    </a>
+                </div>
+                <div class="user-handle">
+                    <a href="/profile">@{{user.handle}}</a>
+                </div>
+                <div class="row mt-2">
                     <div class="col-sm" id="leaves-input">
                         Leaves
                     </div>
@@ -19,15 +25,13 @@
                 </div>
                 <div class="row">
                     <div class="col-sm">
-                        <span id="leaves-count">3</span>
-
+                        <span id="leaves-count">0</span>
                     </div>
                     <div class="col-sm">
-                        <span id="saplings-count">4</span>
-
+                        <span id="saplings-count">0</span>
                     </div>
                     <div class="col-sm">
-                        <span id="saplings-count">5</span>
+                        <span id="saplings-count">0</span>
                     </div>
                 </div>
             </div>
@@ -68,8 +72,8 @@
         </div>
     </div>
 
-    <div class="col-sm-3 my-3">
-        <div class="card topBranch">
+    <div class="col-sm-3">
+        <div class="card topBranch my-3">
             <img class="card-img-top" src="/static/images/sapling.png" alt="sapling">
             <div class="card-body">
                 <h5 class="card-title">Trending Branches</h5>

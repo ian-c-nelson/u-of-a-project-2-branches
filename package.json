@@ -8,8 +8,10 @@
     "lint": "eslint **/*.js --quiet",
     "fix": "eslint --fix .",
     "test": "npm run lint && NODE_ENV=test mocha -u tdd --reporter spec --exit",
-    "watch": "cross-env NODE_ENV=development nodemon server.js",
-    "reset-db": "cross-env NODE_ENV=development node server.js reset-db"
+    "watch-mac": "cross-env NODE_ENV=development-mac nodemon server.js",
+    "watch-pc": "cross-env NODE_ENV=development-pc nodemon server.js",
+    "reset-db-mac": "cross-env NODE_ENV=development-mac node server.js reset-db",
+    "reset-db-pc": "cross-env NODE_ENV=development-pc node server.js reset-db"
   },
   "license": "ISC",
   "dependencies": {
