@@ -56,14 +56,14 @@
                 <form>
                     <div class="form-group">
                         <textarea class="form-control mb-2" id="createPost" rows="3"></textarea>
-                        <button for="createPost" type="button" class="btn btn-success">Make a Post</button>
+                        <button for="createPost" type="button" class="btn btn-success postButton">Make a Post</button>
                     </div>
                 </form>
             </div>
         </div>
 
         <div class="card my-3">
-            <h5 class="card-header">Leaves</h5>
+            <h5 class="card-header">Leaves <button type="button" class="btn btn-sm btn-success float-right refreshStuff">Refresh</button></h5>
             <div class="card-body">
                 {{#each leafData}}
                 {{> leaves/leaf-card}}
@@ -76,7 +76,7 @@
         <div class="card topBranch my-3">
             <img class="card-img-top" src="/static/images/sapling.png" alt="sapling">
             <div class="card-body">
-                <h5 class="card-title">Trending Branchs</h5>
+                <h5 class="card-title">Trending Branches</h5>
                 {{#each topBranchers}}
                 <li><a href="/index?filterById={{id}}"> {{handle}} </a> </li>
                 {{/each}}
