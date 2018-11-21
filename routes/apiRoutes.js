@@ -45,7 +45,9 @@ module.exports = function (app) {
   app.get("/api/leaves/:id?", function (req, res) {
     let options = {};
 
-    console.log(req.user);
+    options.order = [["id", "DESC"]];
+
+    // console.log(req.user);
 
 
     if (req.params.id) {
@@ -74,7 +76,8 @@ module.exports = function (app) {
     hashTags.forEach(function (buritto) {
       seeds.push({ text: buritto });
     });
-    
+
+    req.body.BranchId = req.user.id;
     req.body.seeds = seeds;
 
     db.Leaf
@@ -96,7 +99,7 @@ module.exports = function (app) {
 
   // Update a leaf
   app.put("/api/leaves", function (req, res) {
-    console.log(req.body);
+
     db.Leaf.update(req.body, {
       where: { id: req.body.id }
     }).then(function (resData) {
@@ -126,6 +129,8 @@ module.exports = function (app) {
   app.get("/api/branches/:id?", function (req, res) {
     let options = {};
 
+    options.order = [["id", "DESC"]];
+
     if (req.params.id) {
       options.where = {
         id: req.params.id
@@ -133,12 +138,6 @@ module.exports = function (app) {
     };
 
     if (req.query.includeLeaves === "true") {
-      // options.include = {
-      //   as: "leaves",
-      //   model: [db.Leaf],
-      //   include: [{ model: [db.Branch] }]
-      // }
-
       options.include =
         [
           {
@@ -150,7 +149,24 @@ module.exports = function (app) {
         ]
     }
 
-    console.log(db.Branch);
+    if (req.query.filterByName) {
+      options.order = [[{model: db.Leaf, as: 'leaves'}, 'id', 'DESC']];
+
+      options.where = {
+        handle: req.query.filterByName
+      }
+      options.include =
+        [
+          {
+            model: db.Leaf, as: 'leaves',
+            
+            include:
+              [
+                { model: db.Branch }
+              ],
+          }
+        ]
+    }
 
     if (req.query.idList) {
       let idList = req.query.idList.split("|");
@@ -160,7 +176,6 @@ module.exports = function (app) {
         }
       }
     }
-    console.log(options);
 
     db.Branch.findAll(options).then(function (resData) {
       res.json(resData);
@@ -298,5 +313,4 @@ module.exports = function (app) {
       });
   });
   // =========== Seeds (Hashtags) =================================================================
-
 };
