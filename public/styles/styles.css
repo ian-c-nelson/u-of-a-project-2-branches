@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Acme|Merienda:400,700');
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-image:url("../images/Wallpaper-Dark-Green-Leave-Macro.jpg");
   background-repeat:no-repeat;
@@ -7,6 +11,18 @@ body {
   background-position:top;
   padding:10px;
   font-family: 'Acme', sans-serif;
+  color: rgba(11, 90, 28);
+
+}
+
+a,
+a:visited {
+  color: mediumseagreen;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 .navbar {
@@ -32,21 +48,33 @@ body {
   border: 4px solid;
   color:black;
 }
+
+.card.profile {
+  text-align: center;
+}
+
+.card.profile .user-name {
+  font-size:x-large;
+}
+
+.card.profile .user-name > a,
+.card.profile .user-name > a:visited {
+  color: rgba(11, 90, 28);
+}
+
+
 #leaves-input{
     font-size: x-small;
-    margin: 0px;
-    padding: 0px;
 }
-#saplings-input{
+
+#saplings-input {
     font-size: x-small;
-    margin: 0px;
-    padding: -10px;
 }
-#stems-input{
+
+#stems-input {
     font-size: x-small;
-    margin: 0px;
-    padding: 0px;
 }
+
 .card-img-top{
   width: 70px;
   height: 70px;
