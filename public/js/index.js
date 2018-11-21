@@ -24,7 +24,7 @@ $(window).ready(function(){
   });
 
   $(".postButton").on("click", function(event){
-    var textLeaf = $(".postText").val();
+    var textLeaf = $("#createPost").val();
 
     var data = {
       text: textLeaf
@@ -39,5 +39,9 @@ $(window).ready(function(){
       location.reload();
     });
   });
+
+  $(".refreshStuff").on("click", function(event){
+    location.reload();
+  })
 
 });
