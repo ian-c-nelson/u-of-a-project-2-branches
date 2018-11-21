@@ -1,12 +1,10 @@
 $(window).ready(function(){
-  console.log("page loaded");
+  // console.log("page loaded");
   $(".textLeaf").html(function(){
     return $(this).text().replace(/\r\n/g," <br> ").replace(/\n/g," <br> ");
   });
 
   $(".like").on("click", function(event){
-    
-    
     var data = $(this).data();
     var $badge = $(this).find(".badge-likes");
     
@@ -24,4 +22,22 @@ $(window).ready(function(){
       });
     });
   });
+
+  $(".postButton").on("click", function(event){
+    var textLeaf = $(".postText").val();
+
+    var data = {
+      text: textLeaf
+    }
+
+    var obj = {
+      url: "/api/leaves",
+      method: "POST",
+      data: data
+    }
+    $.ajax(obj).then(function(resData){
+      location.reload();
+    });
+  });
+
 });

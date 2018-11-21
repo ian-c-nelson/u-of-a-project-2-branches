@@ -32,11 +32,18 @@ module.exports = function (app) {
   });
 
   app.get("/index", isAuthenticated, function (req, res) {
-    var branchIdFilter;
-    if(req.query.filterById){
-      branchIdFilter = req.query.filterById;
-    }
-    var data = {};
+    var data = {
+      user: {
+        id: req.user.id,
+        name: req.user.name,
+        handle: req.user.handle,
+        profileImgUrl: req.user.profileImgUrl,
+        bio: req.user.bio,
+        joined: req.user.createdAt
+      }
+    };
+
+    
     var connectionQuery = `SELECT BranchId, count(*) as BranchCount
                               from Leafs
                               group by Leafs.BranchId
@@ -50,11 +57,29 @@ module.exports = function (app) {
     limit 10;` ;
 
 
-    var path = branchIdFilter ? "branches/"+ branchIdFilter + "?includeLeaves=true" :  "leaves?includeBranch=true";
-    console.log(path);
-    fetchData(apiDomain + path , function (response) {
 
-      data.leafData = branchIdFilter ? response[0].leaves :  response;
+    var path = "leaves?includeBranch=true";
+
+    if (req.query.filterById) {
+      path = "branches/" + req.query.filterById + "?includeLeaves=true";
+
+    }
+    if (req.query.filterByName) {
+      path = "branches/?filterByName=" + req.query.filterByName;
+
+    }
+
+    console.log(path);
+
+    fetchData(apiDomain + path, function (response) {
+
+
+      if (req.query.filterById || req.query.filterByName) {
+        data.leafData = response[0].leaves;
+      }
+      else {
+        data.leafData = response;
+      }
 
       data.topBranchers = [];
 
@@ -62,7 +87,7 @@ module.exports = function (app) {
       connection.query(connectionQuery, function (err, resualt) {
         if (err) throw err;
 
-        console.log("SOME DATA HERE LOOK HERE *&@^#$@#&^$%&@^*!", resualt[0]);
+        // console.log("SOME DATA HERE LOOK HERE *&@^#$@#&^$%&@^*!", resualt[0]);
 
         let idList = "";
 
@@ -79,7 +104,7 @@ module.exports = function (app) {
           connection.query(connectionQueryHashtags, function (err, hashtags) {
             if (err) throw err;
             data.topHashTags = hashtags;
-            console.log(hashtags);
+            // console.log(hashtags);
 
             res.render("index", data);
           })
