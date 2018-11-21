@@ -129,8 +129,6 @@ module.exports = function (app) {
   app.get("/api/branches/:id?", function (req, res) {
     let options = {};
 
-    options.order = [["id", "DESC"]];
-
     if (req.params.id) {
       options.where = {
         id: req.params.id
@@ -138,6 +136,7 @@ module.exports = function (app) {
     };
 
     if (req.query.includeLeaves === "true") {
+      options.order = [["id", "DESC"]];
       options.include =
         [
           {
@@ -150,7 +149,7 @@ module.exports = function (app) {
     }
 
     if (req.query.filterByName) {
-      options.order = [[{model: db.Leaf, as: 'leaves'}, 'id', 'DESC']];
+      options.order = [[{ model: db.Leaf, as: 'leaves' }, 'id', 'DESC']];
 
       options.where = {
         handle: req.query.filterByName
@@ -159,7 +158,7 @@ module.exports = function (app) {
         [
           {
             model: db.Leaf, as: 'leaves',
-            
+
             include:
               [
                 { model: db.Branch }

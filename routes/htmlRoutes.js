@@ -56,7 +56,7 @@ module.exports = function (app) {
       }
     };
 
-    
+
     var connectionQuery = `SELECT BranchId, count(*) as BranchCount
                               from Leafs
                               group by Leafs.BranchId
@@ -70,6 +70,11 @@ module.exports = function (app) {
     limit 10;` ;
 
 
+    var queryGetLeavesCount = `select 
+    b.id, 
+    (select count(*) from Leafs where BranchId = b.id group by BranchId) as leafCount
+    from Branches b
+    where b.id =` + req.user.id;
 
     var path = "leaves?includeBranch=true";
 
@@ -118,8 +123,11 @@ module.exports = function (app) {
             if (err) throw err;
             data.topHashTags = hashtags;
             // console.log(hashtags);
-
-            res.render("index", data);
+            connection.query(queryGetLeavesCount, function(err, counts){
+              
+              data.leafCount = counts[0];
+              res.render("index", data);
+            })
           })
         })
 
