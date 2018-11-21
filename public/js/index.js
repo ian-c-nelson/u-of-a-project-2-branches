@@ -1,12 +1,10 @@
 $(window).ready(function(){
-  console.log("page loaded");
+  // console.log("page loaded");
   $(".textLeaf").html(function(){
     return $(this).text().replace(/\r\n/g," <br> ").replace(/\n/g," <br> ");
   });
 
   $(".like").on("click", function(event){
-    
-    
     var data = $(this).data();
     var $badge = $(this).find(".badge-likes");
     

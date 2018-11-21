@@ -32,11 +32,21 @@ module.exports = function (app) {
   });
 
   app.get("/index", isAuthenticated, function (req, res) {
+    var data = {
+      user: {
+        id: req.user.id,
+        name: req.user.name,
+        handle: req.user.handle,
+        profileImgUrl: req.user.profileImgUrl,
+        bio: req.user.bio,
+        joined: req.user.createdAt
+      }
+    };
+
     var branchIdFilter;
-    if(req.query.filterById){
+    if (req.query.filterById) {
       branchIdFilter = req.query.filterById;
     }
-    var data = {};
     var connectionQuery = `SELECT BranchId, count(*) as BranchCount
                               from Leafs
                               group by Leafs.BranchId
@@ -50,11 +60,10 @@ module.exports = function (app) {
     limit 10;` ;
 
 
-    var path = branchIdFilter ? "branches/"+ branchIdFilter + "?includeLeaves=true" :  "leaves?includeBranch=true";
-    console.log(path);
-    fetchData(apiDomain + path , function (response) {
+    var path = branchIdFilter ? "branches/" + branchIdFilter + "?includeLeaves=true" : "leaves?includeBranch=true";
+    fetchData(apiDomain + path, function (response) {
 
-      data.leafData = branchIdFilter ? response[0].leaves :  response;
+      data.leafData = branchIdFilter ? response[0].leaves : response;
 
       data.topBranchers = [];
 
@@ -62,7 +71,7 @@ module.exports = function (app) {
       connection.query(connectionQuery, function (err, resualt) {
         if (err) throw err;
 
-        console.log("SOME DATA HERE LOOK HERE *&@^#$@#&^$%&@^*!", resualt[0]);
+        // console.log("SOME DATA HERE LOOK HERE *&@^#$@#&^$%&@^*!", resualt[0]);
 
         let idList = "";
 
@@ -79,7 +88,7 @@ module.exports = function (app) {
           connection.query(connectionQueryHashtags, function (err, hashtags) {
             if (err) throw err;
             data.topHashTags = hashtags;
-            console.log(hashtags);
+            // console.log(hashtags);
 
             res.render("index", data);
           })
