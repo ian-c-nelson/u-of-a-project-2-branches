@@ -32,7 +32,18 @@ module.exports = function (app) {
   });
 
   app.get("/index", isAuthenticated, function (req, res) {
-    var data = {};
+    var data = {
+      user: {
+        id: req.user.id,
+        name: req.user.name,
+        handle: req.user.handle,
+        profileImgUrl: req.user.profileImgUrl,
+        bio: req.user.bio,
+        joined: req.user.createdAt
+      }
+    };
+
+    
     var connectionQuery = `SELECT BranchId, count(*) as BranchCount
                               from Leafs
                               group by Leafs.BranchId
@@ -76,7 +87,7 @@ module.exports = function (app) {
       connection.query(connectionQuery, function (err, resualt) {
         if (err) throw err;
 
-        console.log("SOME DATA HERE LOOK HERE *&@^#$@#&^$%&@^*!", resualt[0]);
+        // console.log("SOME DATA HERE LOOK HERE *&@^#$@#&^$%&@^*!", resualt[0]);
 
         let idList = "";
 
@@ -93,7 +104,7 @@ module.exports = function (app) {
           connection.query(connectionQueryHashtags, function (err, hashtags) {
             if (err) throw err;
             data.topHashTags = hashtags;
-            console.log(hashtags);
+            // console.log(hashtags);
 
             res.render("index", data);
           })
