@@ -59,7 +59,7 @@ db.sequelize.sync(syncOptions).then(function() {
     if(resetDb) {
       console.log("Generating and posting seed data.");
       let dataSeeder = new DataSeeder(app);
-      dataSeeder.postBranches(50);
+    //   dataSeeder.postBranches(50);
     }
   });
 });
