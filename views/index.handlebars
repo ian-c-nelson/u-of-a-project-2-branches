@@ -42,7 +42,7 @@
             <div class="card-body">
                 <h5 class="card-title">Trending Seeds</h5>
                 {{#each topHashTags}}
-                <li><a href=""> {{text}} </a> </li>
+                <li><a href="/index?filterByTag={{text}}">#{{text}}</a></li>
                 {{/each}}
             </div>
         </div>
@@ -78,7 +78,7 @@
             <div class="card-body">
                 <h5 class="card-title">Trending Branches</h5>
                 {{#each topBranchers}}
-                <li><a href="/index?filterById={{id}}"> {{handle}} </a> </li>
+                <li><a href="/index?filterByHandle={{handle}}">{{handle}}</a></li>
                 {{/each}}
             </div>
         </div>

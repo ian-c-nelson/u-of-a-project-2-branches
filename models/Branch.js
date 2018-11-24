@@ -40,16 +40,31 @@ module.exports = function (sequelize, DataTypes) {
 
   Branch.associate = (models) => {
     Branch.hasMany(models.Leaf, {
-      as: "leaves",
+      as: { singular: "leaf", plural: "leaves" },
       onDelete: "cascade",
       foreignKey: {
         allowNull: false
       }
     });
 
+    // following
     Branch.belongsToMany(models.Branch, {
-      as: "saplings",
-      through: "Saplings"
+      as: "Saplings",
+      through: "StemSapling",  
+      onDelete: "cascade",
+      foreignKey: "stem_id",
+      otherKey: "sapling_id",
+      constraints: false
+    });
+    
+    // followed
+    Branch.belongsToMany(models.Branch, {
+      as: "Stems",
+      through: "StemSapling",
+      onDelete: "cascade",
+      foreignKey: "sapling_id",
+      otherKey: "stem_id",
+      constraints: false
     });
   };
 

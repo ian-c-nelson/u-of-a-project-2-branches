@@ -36,31 +36,29 @@ app.set("view engine", "handlebars");
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
-// if (process.env.NODE_ENV === "test") {
-//   syncOptions.force = true;
-// }
-
 let resetDb = process.argv[2] === "reset-db";
 let syncOptions = { force: resetDb };
 
-if(resetDb) {
+if (resetDb) {
   console.log("Rebuilding Database. Data will be lost.");
 }
 
 // Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync(syncOptions).then(function() {
-  app.listen(app.listenOnPort, function() {
+db.sequelize.sync(syncOptions).then(function () {
+  app.listen(app.listenOnPort, function () {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser. Environment: " + process.env.NODE_ENV,
       app.listenOnPort,
       app.listenOnPort
     );
 
-    if(resetDb) {
-      console.log("Generating and posting seed data.");
-      let dataSeeder = new DataSeeder(app);
-      // dataSeeder.postBranches(50);
-    }
+    db.Branch.findAll().then(result => {
+      if (result.length === 0) {
+          console.log("Generating and posting seed data.");
+          let dataSeeder = new DataSeeder(app);
+          dataSeeder.postBranches(50);
+      }
+    });
   });
 });
 

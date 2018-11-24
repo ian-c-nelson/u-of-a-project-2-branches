@@ -25,21 +25,24 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     // replies
-    Leaf.belongsToMany(models.Leaf, {
-        as: "replies",
-        through: "LeafReplies"
+    Leaf.hasMany(models.Leaf, {
+      as: "replies",
+      onDelete: "cascade",
+      foreignKey: "reply_to_id",
+      constraints: false
     });
 
-    // retweets
-    Leaf.belongsToMany(models.Branch, {
-        as: "grafts",
-        through: "BranchGrafts"
+    // tags
+    Leaf.belongsToMany(models.Seed, {
+      as: { singular: "seed", plural: "seeds" },
+      through: {
+        model: "LeafSeed",
+        unique: false
+      },
+      foreignKey: "leaf_id",
+      otherKey: "seed_id",
+      constraints: false
     });
-
-    // Leaf.belongsToMany(models.Seed, {
-    //   as: "seeds",
-    //   through: "LeafSeeds"
-    // });
 
   }
 
