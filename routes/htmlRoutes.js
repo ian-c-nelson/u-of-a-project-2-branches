@@ -65,6 +65,11 @@ module.exports = function (app) {
 
     var path = "leaves?includeBranch=true";
 
+    // TODO Implement this.
+    // if (req.query.filterByTag) {
+    //   path = "branches/" + req.query.filterById + "?includeLeaves=true";
+    // }
+
     if (req.query.filterById) {
       path = "branches/" + req.query.filterById + "?includeLeaves=true";
 
