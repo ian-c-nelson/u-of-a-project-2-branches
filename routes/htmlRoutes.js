@@ -26,6 +26,19 @@ module.exports = function (app) {
 
     res.render("login", { layout: "anon" });
   });
+  app.get("/profile", isAuthenticated, function (req, res) {
+    var data = {
+      user: {
+        id: req.user.id,
+        name: req.user.name,
+        handle: req.user.handle,
+        profileImgUrl: req.user.profileImgUrl,
+        bio: req.user.bio,
+        joined: req.user.createdAt
+      }
+    };
+    res.render("profile", data);
+  });
 
   app.get("/signup", function (req, res) {
     res.render("signup", { layout: "anon" });
