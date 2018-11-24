@@ -56,7 +56,6 @@ module.exports = function (app) {
       }
     };
 
-
     var connectionQuery = `SELECT BranchId, count(*) as BranchCount
                               from Leafs
                               group by Leafs.BranchId
@@ -80,19 +79,21 @@ module.exports = function (app) {
 
     if (req.query.filterById) {
       path = "branches/" + req.query.filterById + "?includeLeaves=true";
-
-    }
-    if (req.query.filterByName) {
-      path = "branches/?filterByName=" + req.query.filterByName;
-
     }
 
+    if (req.query.filterByHandle) {
+      path = "branches/?filterByHandle=" + req.query.filterByHandle;
+    }
+
+    if (req.query.filterByTag) {
+      path = "seeds/?filterByTag=" + req.query.filterByTag;
+    }
+
+    console.log(req.query);
     console.log(path);
 
     fetchData(apiDomain + path, function (response) {
-
-
-      if (req.query.filterById || req.query.filterByName) {
+      if (req.query.filterById || req.query.filterByHandle || req.query.filterByTag) {
         data.leafData = response[0].leaves;
       }
       else {
@@ -101,17 +102,12 @@ module.exports = function (app) {
 
       data.topBranchers = [];
 
-
-      connection.query(connectionQuery, function (err, resualt) {
+      connection.query(connectionQuery, function (err, results) {
         if (err) throw err;
-
-        // console.log("SOME DATA HERE LOOK HERE *&@^#$@#&^$%&@^*!", resualt[0]);
-
         let idList = "";
-
-        for (var i = 0; i < resualt.length; i++) {
-          idList += resualt[i].BranchId;
-          if (i < resualt.length - 1) {
+        for (var i = 0; i < results.length; i++) {
+          idList += results[i].BranchId;
+          if (i < results.length - 1) {
             idList += "|";
           }
         }
@@ -123,14 +119,13 @@ module.exports = function (app) {
             if (err) throw err;
             data.topHashTags = hashtags;
             // console.log(hashtags);
-            connection.query(queryGetLeavesCount, function(err, counts){
-              
+            connection.query(queryGetLeavesCount, function (err, counts) {
+
               data.leafCount = counts[0];
               res.render("index", data);
             })
           })
-        })
-
+        });
       });
     });
   });

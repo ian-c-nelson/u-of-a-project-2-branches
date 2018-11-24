@@ -1,6 +1,7 @@
-var db = require("../models");
-var passport = require("../config/passport");
+const db = require("../models");
+const passport = require("../config/passport");
 const HashTags = require("find-hashtags");
+const _ = require("lodash-core");
 
 module.exports = function (app) {
 
@@ -47,9 +48,6 @@ module.exports = function (app) {
 
     options.order = [["id", "DESC"]];
 
-    // console.log(req.user);
-
-
     if (req.params.id) {
       options.where = {
         id: req.params.id
@@ -71,25 +69,37 @@ module.exports = function (app) {
 
   // Create a new leaf
   app.post("/api/leaves", function (req, res) {
-    let hashTags = HashTags(req.body.text);
-    var seeds = [];
-    hashTags.forEach(function (buritto) {
-      seeds.push({ text: buritto });
-    });
+    let hashTags = _.uniq(HashTags(req.body.text));
 
+    // Add id to body so we can pass it to the create method.
     req.body.BranchId = req.user.id;
-    req.body.seeds = seeds;
 
     db.Leaf
       .create(req.body)
-      .then(function (resData) {
+      .then(newLeaf => {
+        hashTags.forEach(hashTag => {
+          let tag = {
+            text: hashTag
+          }
 
+          db.Seed.
+            findOne({
+              where: tag
+            }).
+            then(seed => {
+              if (seed) {
+                newLeaf.addSeed(seed);
+              } else {
+                db.Seed
+                  .create(tag)
+                  .then(newSeed => {
+                    newLeaf.addSeed(newSeed);
+                  });
+              }
+            });
+        });
 
-        // db.Seed.bulkCreate(seeds).then(function (resData) {
-        //   console.log("Hashtags addes");
-        // });
-
-        res.json(resData);
+        res.json(newLeaf);
       })
       .catch(function (err) {
         console.log(err);
@@ -109,7 +119,6 @@ module.exports = function (app) {
         console.log(err);
         res.json(err);
       });
-    ;
   });
 
   // Delete a leaf by id
@@ -148,11 +157,11 @@ module.exports = function (app) {
         ]
     }
 
-    if (req.query.filterByName) {
+    if (req.query.filterByHandle) {
       options.order = [[{ model: db.Leaf, as: 'leaves' }, 'id', 'DESC']];
 
       options.where = {
-        handle: req.query.filterByName
+        handle: req.query.filterByHandle
       }
       options.include =
         [
@@ -166,6 +175,7 @@ module.exports = function (app) {
           }
         ]
     }
+
 
     if (req.query.idList) {
       let idList = req.query.idList.split("|");
@@ -265,8 +275,50 @@ module.exports = function (app) {
 
   // =========== Seeds (Hashtags) =================================================================
   // Get all seeds
-  app.get("/api/seeds", function (req, res) {
-    db.Seed.findAll({}).then(function (resData) {
+  app.get("/api/seeds/:id?", function (req, res) {
+    let options = {};
+
+    console.log(req.query);
+
+    if (req.params.id) {
+      options.where = {
+        id: req.params.id
+      }
+    };
+
+    if (req.query.includeLeaves === "true") {
+      options.order = [["id", "DESC"]];
+      options.include =
+        [
+          {
+            model: db.Leaf, as: 'leaves', include:
+              [
+                { model: db.Branch }
+              ]
+          }
+        ]
+    }
+
+    if (req.query.filterByTag) {
+      options.order = [[{ model: db.Leaf, as: 'leaves' }, 'id', 'DESC']];
+
+      options.where = {
+        text: req.query.filterByTag
+      };
+
+      options.include =
+        [
+          {
+            model: db.Leaf, as: 'leaves',
+            include:
+              [
+                { model: db.Branch }
+              ],
+          }
+        ];
+    }
+
+    db.Seed.findAll(options).then(function (resData) {
       res.json(resData);
     })
       .catch(function (err) {
