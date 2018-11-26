@@ -3,7 +3,7 @@ $(window).ready(function(){
         event.preventDefault();
         var searchBranch = $(".searchBranches").val();
 
-        let url = "/index?filterByName=" + searchBranch;
+        let url = "/index?filterByHandle=" + searchBranch;
 
         window.location.href = url;
         
