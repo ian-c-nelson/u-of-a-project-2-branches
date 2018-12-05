@@ -12,14 +12,20 @@ const DataSeeder = require("./data/data-seeder");
 app.listenOnPort = process.env.PORT || 3000;
 
 // Middleware
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(express.json());
 
 // static folder
 app.use("/static", express.static(path.join(__dirname, "./public")));
 
 // We need to use sessions to keep track of our user's login status
-app.use(session({ secret: "{0C6FA658-0E12-4FC7-A1D5-D6BCAD1010E4}", resave: true, saveUninitialized: true }));
+app.use(session({
+  secret: "{0C6FA658-0E12-4FC7-A1D5-D6BCAD1010E4}",
+  resave: true,
+  saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -37,7 +43,9 @@ require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
 let resetDb = process.argv[2] === "reset-db";
-let syncOptions = { force: resetDb };
+let syncOptions = {
+  force: resetDb
+};
 
 if (resetDb) {
   console.log("Rebuilding Database. Data will be lost.");
@@ -47,16 +55,16 @@ if (resetDb) {
 db.sequelize.sync(syncOptions).then(function () {
   app.listen(app.listenOnPort, function () {
     console.log(
-      "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser. Environment: " + process.env.NODE_ENV,
-      app.listenOnPort,
-      app.listenOnPort
+      `==> 🌎  Listening on port ${app.listenOnPort}.
+      Visit http://localhost:${app.listenOnPort}/ in your browser.
+      Environment: ${process.env.NODE_ENV}`
     );
 
     db.Branch.findAll().then(result => {
       if (result.length === 0) {
-          console.log("Generating and posting seed data.");
-          let dataSeeder = new DataSeeder(app);
-          dataSeeder.postBranches(50);
+        console.log("Generating and posting seed data.");
+        let dataSeeder = new DataSeeder(app);
+        dataSeeder.postBranches(50);
       }
     });
   });

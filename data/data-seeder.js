@@ -266,7 +266,7 @@ DataSeeder.prototype.postBranches = function (howMany) {
                             return;
                         }
 
-                        let text = trimContent(content) + " " + os.EOL + hashTag;
+                        let text = trimContent(content) + " " + os.EOL + "#" + hashTag;
                         let leaf = {
                             "text": text,
                             "likes": _.random(0, 50),

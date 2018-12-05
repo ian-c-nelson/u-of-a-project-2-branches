@@ -1,7 +1,6 @@
 require("../public/js/utils");
 const db = require("../models");
 const axios = require("axios");
-const connection = require("../config/connection");
 
 // Requiring our custom middleware for checking if a user is logged in
 const isAuthenticated = require("../config/middleware/isAuthenticated");
@@ -26,7 +25,8 @@ module.exports = function (app) {
 
     res.render("login", { layout: "anon" });
   });
-  app.get("/profile", isAuthenticated, function (req, res) {
+
+    app.get("/profile", isAuthenticated, function (req, res) {
     var data = {
       user: {
         id: req.user.id,
@@ -37,6 +37,7 @@ module.exports = function (app) {
         joined: req.user.createdAt
       }
     };
+    
     res.render("profile", data);
   });
 
@@ -89,9 +90,6 @@ module.exports = function (app) {
       path = "seeds/?filterByTag=" + req.query.filterByTag;
     }
 
-    console.log(req.query);
-    console.log(path);
-
     fetchData(apiDomain + path, function (response) {
       if (req.query.filterById || req.query.filterByHandle || req.query.filterByTag) {
         data.leafData = response[0].leaves;
@@ -102,7 +100,7 @@ module.exports = function (app) {
 
       data.topBranchers = [];
 
-      connection.query(connectionQuery, function (err, results) {
+      db.sequelizer.query(connectionQuery, function (err, results) {
         if (err) throw err;
         let idList = "";
         for (var i = 0; i < results.length; i++) {
@@ -115,11 +113,11 @@ module.exports = function (app) {
         fetchData(apiDomain + "branches/?idList=" + idList, function (moreData) {
           data.topBranchers = moreData;
 
-          connection.query(connectionQueryHashtags, function (err, hashtags) {
+          db.sequelizer.query(connectionQueryHashtags, function (err, hashtags) {
             if (err) throw err;
             data.topHashTags = hashtags;
             // console.log(hashtags);
-            connection.query(queryGetLeavesCount, function (err, counts) {
+            db.sequelizer.query(queryGetLeavesCount, function (err, counts) {
 
               data.leafCount = counts[0];
               res.render("index", data);
